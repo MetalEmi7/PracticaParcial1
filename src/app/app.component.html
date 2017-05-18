@@ -1,0 +1,22 @@
+<html>  
+  <head></head>
+
+  <body>
+    <h1>{{title}}</h1>
+
+    <div>
+    <form *ngIf="showForm">
+      <input type="text" name="nombre" [(ngModel)]="form.nombre" >
+      <input type="password" name="password" [(ngModel)]="form.password">
+
+      <input type="submit" name="submit" (click)="Login($event, form)">
+      <br><br><br>
+
+
+ </form>  
+   
+    </div>
+
+  </body>
+
+</html>
