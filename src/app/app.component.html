@@ -4,18 +4,51 @@
   <body>
     <h1>{{title}}</h1>
 
-    <div>
-    <form *ngIf="showForm">
+
+
+    <form *ngIf="showFormLogin">
+      <h1>Login</h1>
       <input type="text" name="nombre" [(ngModel)]="form.nombre" >
       <input type="password" name="password" [(ngModel)]="form.password">
 
-      <input type="submit" name="submit" (click)="Login($event, form)">
+      <input type="submit" name="sub" value="Login" (click)="Login(form)">
+      <br><br><br>
+    </form>
+
+
+
+    <form *ngIf="showFormAlta">
+      <h1>Alta</h1>
+      <input type="text" name="nombre" [(ngModel)]="form.nombre" >
+      <input type="password" name="password" [(ngModel)]="form.password">
+      <input type="email" name="email" [(ngModel)]="form.email" >
+      <input type="text" name="perfil" [(ngModel)]="form.perfil">
+      <input type="text" name="foto" [(ngModel)]="form.foto">
+
+      <input type="submit" name="sub" value="Alta" (click)="Alta(form)">
+      <br><br>
+
+      <input type="text" name="id" [(ngModel)]="form.id">
+      <input type="submit" name="sub" value="Baja" (click)="Baja(form.id)">
       <br><br><br>
 
+      <input type="button" name="BtnDatos" value="_Traer Datos" (click)="ActualizarGrilla()">
+    </form>
 
- </form>  
-   
-    </div>
+
+
+      <div *ngIf="ShowSmartTable">
+      <ng2-smart-table [settings]="sets" [source]="source_test"
+      (onChange)="Log_SM($event)">  </ng2-smart-table>
+
+      </div>
+
+
+
+
+
+
+
 
   </body>
 

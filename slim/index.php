@@ -11,6 +11,8 @@ $app->options('/{routes:.+}', function ($request, $response, $args) {
     return $response;
 });
 
+
+
 $app->add(function ($req, $res, $next) {
     $response = $next($req, $res);
     return $response
@@ -19,9 +21,18 @@ $app->add(function ($req, $res, $next) {
             ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 });
 
+
+
 $app->get('/table/{table}', function (Request $request, Response $response) {
     $table = $request->getAttribute('table');
     return GenericDAO::getAll($table);
+});
+
+$app->post('/table/{table}/Login', function (Request $request, Response $response,$args) {
+    $table = $request->getAttribute('table');
+    $params = $request->getParams("form");
+    GenericDAO::getUser($table,$params);
+    return $response;     
 });
 
 $app->post('/table/{table}/insert', function (Request $request, Response $response,$args) {

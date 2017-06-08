@@ -25,6 +25,31 @@ class GenericDAO
 		}
     }
 
+
+
+	public static function getUser($table, $user){
+
+        try{
+			$db = GenericDAO::getPDO();
+
+			$sql = "SELECT * FROM ".$table."where nombre = :nombre AND email = :email";
+			
+			$statement = $db->sendQuery($sql);
+			$statement->bindValue(":nombre", $user['nombre'], PDO::PARAM_STR);
+			$statement->bindValue(":email", $user['email'], PDO::PARAM_STR);
+
+			$statement->execute();
+
+            $rv = $statement->fetchAll(PDO::FETCH_ASSOC); //FetchObject?
+
+			return json_encode($rv);
+		}catch(Exception $ex){
+			die("Error: " . $ex->getMessage());
+		}
+    }
+
+
+
 	public static function insert($table,$params){
 
         try{
@@ -38,6 +63,9 @@ class GenericDAO
 			$statement->bindValue(":foto", $params['foto'], PDO::PARAM_STR);
 			$statement->bindValue(":sexo", $params['sexo'], PDO::PARAM_STR);
 			$statement->execute();
+
+			$rv = $statement->fetchAll(PDO::FETCH_ASSOC); //FetchObject?
+			return json_encode($rv);
 
 		}catch(Exception $ex){
 			$message = $ex->getMessage();

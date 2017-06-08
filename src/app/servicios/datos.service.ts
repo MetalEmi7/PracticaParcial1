@@ -11,19 +11,60 @@ export class DatosService {
 
 
   //Metodos
-traerDatos() {
-    //Url extaida desde   https://restcountries.eu/#api-endpoints-all
+traerDatos(){
+
     let url = 'http://localhost/Laboratorio_lV/Clase1/index.php/table/usuarios';
 
-    // let federal = this.http.get("https://restcountries.eu/rest/v2/all")=>console.log();
-
-    //then y catch se ejecuta asinconicamente
-    
     return this.http.get(url)
       .toPromise()
       .then(this.extractData)
       .catch(this.error);
 }
+
+
+
+darAlta(form) {
+    let url = 'http://localhost/Laboratorio_lV/Clase1/index.php/table/usuarios/insert';
+
+    return this.http.post(url, form)
+      .toPromise()
+      .then(this.extractData)
+      .catch(this.error);
+}
+
+
+
+Logearse(form){
+    let url = 'http://localhost/Laboratorio_lV/Clase1/index.php/table/usuarios/Login';
+
+    return this.http.post(url,form)
+      .toPromise()
+      .then(this.extractData)
+      .catch(this.error);
+}
+
+
+
+darBaja(id){
+    let url = 'http://localhost/Laboratorio_lV/Clase1/index.php/table/usuarios/delete/';
+
+    return this.http.options(url,Option.arguments)
+      .toPromise()
+      .then(this.extractData)
+      .catch(this.error);
+}
+
+
+
+
+
+  
+
+
+
+
+
+
 
   extractData(Res: Response){
     return Res.json() || {};
