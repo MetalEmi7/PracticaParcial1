@@ -28,12 +28,23 @@ $app->get('/table/{table}', function (Request $request, Response $response) {
     return GenericDAO::getAll($table);
 });
 
-$app->post('/table/{table}/Login', function (Request $request, Response $response,$args) {
+$app->get('/table/{table}/Login', function (Request $request, Response $response, $args) {
     $table = $request->getAttribute('table');
-    $params = $request->getParams("form");
+    $params = $request->getParams('form');
     GenericDAO::getUser($table,$params);
-    return $response;     
+    return $response;
 });
+//ERRORES:
+/*  
+    1. GET y POST: Metodo no permitodo [???]
+    2. REQUEST Genera 10 errores
+
+    Aparentemente: Habia un error de sintaxis en la ruta del metodo
+    del servicio en el codigo de angular. [Revisando] 
+*/
+
+
+
 
 $app->post('/table/{table}/insert', function (Request $request, Response $response,$args) {
     $table = $request->getAttribute('table');
@@ -48,6 +59,8 @@ $app->delete('/table/{table}/delete/{id}', function (Request $request, Response 
     GenericDAO::delete($table, $id);
     return $response;
 });
+//ERRORES:
+/* POST: Metodo no permitido :405 */   //Cuando no se manda ningun valor
 
 $app->put('/table/{table}/update', function (Request $request, Response $response) {
     $table = $request->getAttribute('table');

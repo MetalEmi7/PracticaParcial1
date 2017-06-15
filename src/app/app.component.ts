@@ -29,9 +29,9 @@ export class AppComponent {
     id:"",
     nombre:"",
     password:"",
-    email:"MiMail@Emailmal.com",
-    perfil:"Invitado",
-    foto:"UnaFoto.foto"
+    email:"",
+    perfil:"",
+    foto:""
   };  
 
 
@@ -63,9 +63,7 @@ sets={
     nombre:{
       title:"Nombre",
       editable: true,
-      editor:{
-        type:"textArea",
-      },
+      editor:{type:"textArea",},
       source: this.form.nombre,
     },
     email:{
@@ -95,7 +93,14 @@ constructor (private datos:DatosService){
 //Metodos
 Login()
 {
-  this.datos.Logearse(this.form);
+    this.datos.Logearse(this.form)    
+  .then(data=>
+  {
+    this.source_test.load(data)
+    console.log(data)
+    console.log(this.source_test + "MIERDA CAJETUDA")
+  })
+  .catch(error=> console.log(error));
 }
 
 //Error 405: POST Metodo no permitido.
@@ -112,14 +117,18 @@ Alta(){
   .catch(error=> console.log(error));
 }
 
-Baja(){
-    this.datos.darBaja(this.form.id)    
-  .then(data=>{
+Baja(id){
+    this.datos.darBaja(id)    
+  .then(data=>
+  {
     this.source_test.load(data)
-    console.log(data)})
+    console.log(data)
+  })
   .catch(error=> console.log(error));
 }
 
+Modificar(id){
+}
 
 
 Log_SM($e){

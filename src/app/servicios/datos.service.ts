@@ -10,10 +10,28 @@ export class DatosService {
   }
 
 
+
+
+
+Logearse(form){
+    console.log(form);
+
+    let url = 'http://localhost/PracticaParcial1/slim/index.php/table/usuarios/Login';
+    /* Dejar un '/' al final de la ruta genera error 405
+    a menos que en slim o la ruta tenga esta barra para algun fin necesario.
+    En tla caso, las rutas deben coincider exactamente */
+
+    return this.http.get(url,form)
+      .toPromise()  
+      .then(this.extractData)
+      .catch(this.error);
+}
+
+
+
   //Metodos
 traerDatos(){
-
-    let url = 'http://localhost/Laboratorio_lV/Clase1/index.php/table/usuarios';
+    let url = 'http://localhost/PracticaParcial1/slim/index.php/table/usuarios';
 
     return this.http.get(url)
       .toPromise()
@@ -24,7 +42,7 @@ traerDatos(){
 
 
 darAlta(form) {
-    let url = 'http://localhost/Laboratorio_lV/Clase1/index.php/table/usuarios/insert';
+    let url = 'http://localhost/PracticaParcial1/slim/index.php/table/usuarios/insert';
 
     return this.http.post(url, form)
       .toPromise()
@@ -34,10 +52,10 @@ darAlta(form) {
 
 
 
-Logearse(form){
-    let url = 'http://localhost/Laboratorio_lV/Clase1/index.php/table/usuarios/Login';
+darBaja(id){
+    let url = 'http://localhost/PracticaParcial1/slim/index.php/table/usuarios/dele' + "te/" + id;
 
-    return this.http.post(url,form)
+    return this.http.delete(url,id)
       .toPromise()
       .then(this.extractData)
       .catch(this.error);
@@ -45,10 +63,10 @@ Logearse(form){
 
 
 
-darBaja(id){
-    let url = 'http://localhost/Laboratorio_lV/Clase1/index.php/table/usuarios/delete/';
+darModificacion(form){
+    let url = 'http://localhost/PracticaParcial1/slim/index.php/table/usuarios/update';
 
-    return this.http.options(url,Option.arguments)
+    return this.http.post(url,form)
       .toPromise()
       .then(this.extractData)
       .catch(this.error);
@@ -67,10 +85,12 @@ darBaja(id){
 
 
   extractData(Res: Response){
+    console.log(Res);
     return Res.json() || {};
   }
 
   error(error: Response){
+    console.log(error);
     return error;
   }
 }

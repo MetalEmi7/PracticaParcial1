@@ -32,15 +32,15 @@ class GenericDAO
         try{
 			$db = GenericDAO::getPDO();
 
-			$sql = "SELECT * FROM ".$table."where nombre = :nombre AND email = :email";
+			$sql = "select * from " .$table. "where nombre = :nombre AND password = :password2";
 			
 			$statement = $db->sendQuery($sql);
 			$statement->bindValue(":nombre", $user['nombre'], PDO::PARAM_STR);
-			$statement->bindValue(":email", $user['email'], PDO::PARAM_STR);
+			$statement->bindValue(":password", $user['password'], PDO::PARAM_STR);
 
 			$statement->execute();
 
-            $rv = $statement->fetchAll(PDO::FETCH_ASSOC); //FetchObject?
+            $rv = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 			return json_encode($rv);
 		}catch(Exception $ex){
@@ -55,17 +55,14 @@ class GenericDAO
         try{
 			$db = GenericDAO::getPDO();
 
-			$sql = "insert into ".$table . " (nombre, apellido, dni, foto, sexo) values (:nombre, :apellido, :dni, :foto, :sexo)"; //<--- modificar por los campos necesarios
+			$sql = "insert into ".$table . "(nombre, email, password, perfil, foto) values (:1, :2, :3, :5, :4)"; //<--- modificar por los campos necesarios
 			$statement = $db->sendQuery($sql);
-			$statement->bindValue(":nombre", $params['nombre'], PDO::PARAM_STR);
-			$statement->bindValue(":apellido", $params['apellido'], PDO::PARAM_STR);
-			$statement->bindValue(":dni", $params['dni'], PDO::PARAM_STR);			 //para otros tipos de constantes predefinidas ver http://php.net/manual/es/pdo.constants.php
-			$statement->bindValue(":foto", $params['foto'], PDO::PARAM_STR);
-			$statement->bindValue(":sexo", $params['sexo'], PDO::PARAM_STR);
+			$statement->bindValue(":1", $params['nombre'], PDO::PARAM_STR);
+			$statement->bindValue(":2", $params['email'], PDO::PARAM_STR);
+			$statement->bindValue(":3", $params['password'], PDO::PARAM_STR);			 //para otros tipos de constantes predefinidas ver http://php.net/manual/es/pdo.constants.php
+			$statement->bindValue(":4", $params['foto'], PDO::PARAM_STR);
+			$statement->bindValue(":5", $params['perfil'], PDO::PARAM_STR);
 			$statement->execute();
-
-			$rv = $statement->fetchAll(PDO::FETCH_ASSOC); //FetchObject?
-			return json_encode($rv);
 
 		}catch(Exception $ex){
 			$message = $ex->getMessage();
@@ -78,14 +75,13 @@ class GenericDAO
         try{
 			$db = GenericDAO::getPDO();
 
-			$sql = "update ".$table . " set nombre = :nombre,  apellido = :apellido, dni = :dni, foto = :foto, sexo = :sexo where id=:id"; //<---- modificar los campos que sean necesarios
+			$sql = "update ".$table . " set nombre = :1,  email = :2, password = :3, foto = :4, perfil = :5 where id=:id"; //<---- modificar los campos que sean necesarios
 			$statement = $db->sendQuery($sql);
-			$statement->bindValue(":id", $params["id"], PDO::PARAM_INT);
-			$statement->bindValue(":nombre", $params['nombre'], PDO::PARAM_STR);
-			$statement->bindValue(":apellido", $params['apellido'], PDO::PARAM_STR);
-			$statement->bindValue(":dni", $params['dni'], PDO::PARAM_STR);			//para otros tipos de constantes predefinidas ver http://php.net/manual/es/pdo.constants.php
-			$statement->bindValue(":foto", $params['foto'], PDO::PARAM_STR);
-			$statement->bindValue(":sexo", $params['sexo'], PDO::PARAM_STR);
+			$statement->bindValue(":1", $params['nombre'], PDO::PARAM_STR);
+			$statement->bindValue(":2", $params['email'], PDO::PARAM_STR);
+			$statement->bindValue(":3", $params['password'], PDO::PARAM_STR);			 //para otros tipos de constantes predefinidas ver http://php.net/manual/es/pdo.constants.php
+			$statement->bindValue(":4", $params['foto'], PDO::PARAM_STR);
+			$statement->bindValue(":5", $params['perfil'], PDO::PARAM_STR);
 			$statement->execute();
 
 		}catch(Exception $ex){
